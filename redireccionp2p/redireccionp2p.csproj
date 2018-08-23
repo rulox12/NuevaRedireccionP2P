@@ -49,16 +49,19 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Downloads\Release\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\..\..\Documents\Release\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="PlacetoPay.Integrations.Library.CSharp">
-      <HintPath>..\..\..\..\Downloads\Release\PlacetoPay.Integrations.Library.CSharp.dll</HintPath>
+    <Reference Include="PlacetoPay.Integrations.Library.CSharp, Version=1.0.0.0, Culture=neutral, PublicKeyToken=59c45d2d166c43f7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Documents\Release\PlacetoPay.Integrations.Library.CSharp.dll</HintPath>
     </Reference>
-    <Reference Include="RestSharp">
-      <HintPath>..\..\..\..\Downloads\Release\RestSharp.dll</HintPath>
+    <Reference Include="RestSharp, Version=100.0.0.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Documents\Release\RestSharp.dll</HintPath>
     </Reference>
-    <Reference Include="SoapHttpClient">
-      <HintPath>..\..\..\..\Downloads\Release\SoapHttpClient.dll</HintPath>
+    <Reference Include="SoapHttpClient, Version=1.4.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\Documents\Release\SoapHttpClient.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -251,7 +254,9 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -287,6 +292,7 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Transacciones\Index.cshtml" />
     <Content Include="Views\Transacciones\Mensajetrasaccion.cshtml" />
+    <Content Include="Views\Transacciones\CrearTransaccion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
