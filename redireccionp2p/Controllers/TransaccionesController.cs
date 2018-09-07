@@ -139,7 +139,7 @@ namespace redireccionp2p.Controllers
             Gateway gateway = new P2P("6dd490faf9cb87a9862245da41170ff2",
             "024h1IlD",
             new Uri("https://test.placetopay.com/redirection/"),
-            Gateway.TP_SOAP);
+            Gateway.TP_REST);
             return gateway;
         }
         public void CrearTransaccion(string email,string nombre,string apellido, string espagador)
@@ -196,7 +196,7 @@ namespace redireccionp2p.Controllers
         {
             Gateway gateway = CrearAutenticacion();
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
-            RedirectInformation response = gateway.Query("107528");
+            RedirectInformation response = gateway.Query("115420");
         }
         [HttpGet]
         public ActionResult returnURL(int? id)
@@ -245,8 +245,8 @@ namespace redireccionp2p.Controllers
         }
 
         public void CrearCollect()
-        {
-            Token token = new Token("6805038305091111",null, "6805038305091111");
+        { 
+            Token token = new Token("e35935ecac1c134e4de2240aff62d11e6196bf7d3a6594ad0dc54528fff67276", null, "7157190631451111");
 
             Instrument instrument = new Instrument(token);
             Person buyer = new Person("10000004", "CC", "Daniel", "Betancur", "pruebasp2p@hotmail.com");
@@ -255,8 +255,70 @@ namespace redireccionp2p.Controllers
             CollectRequest collectRequest = new CollectRequest(buyer,
                payment,
                instrument);
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
             Gateway gateway = CrearAutenticacion();
             RedirectInformation collect = gateway.Collect(collectRequest);
+
+        }
+        public void sd() {
+            Gateway g;
+            
+
+        }
+
+        public void CrearSubcribcion()
+        {
+            string email, nombre, apellido, espagador;
+            email = "danielpcpx@hotmail.com";
+            nombre = "Daniel";
+            apellido = "betancur";
+            espagador = "no";
+           
+            try
+            {
+                Gateway gateway = CrearAutenticacion();
+                Amount amount = new Amount(20000.002);
+                string referencia = "pruebasd_" + db.Transaccions.ToList().Count();
+                Subscription subcripcion = new Subscription(referencia, "No hay descripcion");
+                Transaccion transaccion = new Transaccion();
+                transaccion.Id = db.Transaccions.ToList().Count() + 1;
+                if (nombre != null && email != null && apellido != null)
+                {
+                    RedirectRequest request;
+                    Person buyer = new Person("10000004", "CC", nombre, apellido, email);
+                    if (espagador == "on")
+                    {
+                        Person payer = new Person("10000004", "CC", nombre, apellido, email);
+                        request = new RedirectRequest(subcripcion,
+                        "http://localhost:63562/Transacciones/returnURL" + "?" + "id=" + transaccion.Id,
+                        "192.168.0.2",
+                        "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0",
+                        (DateTime.Now).AddMinutes(40).ToString("yyyy-MM-ddTHH\\:mm\\:sszzz"), payer, buyer);
+                    }
+                    else
+                    {
+                        request = new RedirectRequest(subcripcion,
+                        "http://localhost:63562/Transacciones/returnURL" + "?" + "id=" + transaccion.Id,
+                        "192.168.0.2",
+                        "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0",
+                        (DateTime.Now).AddMinutes(40).ToString("yyyy-MM-ddTHH\\:mm\\:sszzz"), null, buyer);
+
+                    }
+                    ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                    RedirectResponse response = gateway.Request(request);
+                    transaccion.requestId = response.RequestId;
+                    transaccion.URL = response.ProcessUrl;
+                    transaccion.referencia = referencia;
+                    db.Transaccions.Add(transaccion);
+                    db.SaveChanges();
+                    Response.Redirect(response.ProcessUrl);
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("An error occurred: '{0}'", e);
+            }
 
         }
     }
